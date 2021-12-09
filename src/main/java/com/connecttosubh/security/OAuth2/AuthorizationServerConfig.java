@@ -22,8 +22,8 @@ import java.io.InputStreamReader;
 import java.security.KeyPair;
 import java.util.stream.Collectors;
 
-@Configuration
-@EnableAuthorizationServer
+//@Configuration
+//@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     public static final String RESOURCE_ID = "couponservice";
@@ -70,20 +70,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
          .scopes("read","write").resourceIds(RESOURCE_ID);
     }
 
-    @Bean
-    public JwtTokenStore jwtTokenStore()
-    {
-        return new JwtTokenStore(jwtAccessTokenConverter());
-    }
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter()
-    {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        @Bean
+        public JwtTokenStore jwtTokenStore()
+        {
+            return new JwtTokenStore(jwtAccessTokenConverter());
+        }
+        @Bean
+        public JwtAccessTokenConverter jwtAccessTokenConverter()
+        {
+            JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 
 
-        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource(keyFile), password.toCharArray());
-        KeyPair keyPair = factory.getKeyPair(alias);
-        converter.setKeyPair(keyPair);
-        return converter;
-    }
+            KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource(keyFile), password.toCharArray());
+            KeyPair keyPair = factory.getKeyPair(alias);
+            converter.setKeyPair(keyPair);
+            return converter;
+        }
 }
