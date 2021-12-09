@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Role Assignment</title>
+</head>
+<body>
+<h2>Role Assignment Form</h2>
+<form action="/assignRole" method="post">
+    UserName:<input name="username"/>
+    </br>
+    Role:
+    <!--<input name="role"/>-->
+    <label><input type="radio" name="role" value="ROLE_ADMIN"> ADMIN</label>
+    <label><input type="radio" name="role" value="ROLE_USER"> USER</label>
+    </br>
+    <input type="submit" value="Assign Role"/>
+</form>
+</body>
+</html>
