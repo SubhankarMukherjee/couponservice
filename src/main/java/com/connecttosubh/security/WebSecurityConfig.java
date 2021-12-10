@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +21,8 @@ import java.util.List;
 
 
 //Commented For OATH
-//@Configuration
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -33,23 +35,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //  http.httpBasic();
+         http.httpBasic();
        // http.formLogin(); not required since we have our own login form and security service
         //http.authorizeRequests().mvcMatchers(HttpMethod.GET,"/couponapi/coupons/**")
-        http.authorizeRequests().mvcMatchers(
-                        HttpMethod.GET, "/couponapi/coupons/{code:^[A-Za-z]*$}",  "/index"
-                        , "/getCoupon", "/showGetCoupon", "/couponDetails")
-                .hasAnyRole("ADMIN", "USER")
-                .mvcMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("ADMIN", "USER")
-                .mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon", "/getCoupon","/assignRole").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.GET, "/showCreateCoupon", "/createCoupon", "/createResponse","/SuccessAssign","/showAssignRole","/roleAssignment").hasRole("ADMIN")
-                .mvcMatchers("/login","/","/logout","/showReg","/registerUser").permitAll() // GET and POST Both should be availble for everybody
-
-                .anyRequest().denyAll()  // if pattern is not match all other URL will be denied
-                .and().csrf().disable() // Disabled to configure CSRF
-        //logout feature
-               // .logout().logoutSuccessUrl("/").deleteCookies("JSESSION_ID").invalidateHttpSession(true);
-                .logout().logoutSuccessUrl("/");
+//        http.authorizeRequests().mvcMatchers(
+//                        HttpMethod.GET, "/couponapi/coupons/{code:^[A-Za-z]*$}",  "/index"
+//                        , "/getCoupon", "/showGetCoupon", "/couponDetails")
+//                .hasAnyRole("ADMIN", "USER")
+//                .mvcMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("ADMIN", "USER")
+//                .mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon", "/getCoupon","/assignRole").hasRole("ADMIN")
+//                .mvcMatchers(HttpMethod.GET, "/showCreateCoupon", "/createCoupon", "/createResponse","/SuccessAssign","/showAssignRole","/roleAssignment").hasRole("ADMIN")
+//                .mvcMatchers("/login","/","/logout","/showReg","/registerUser").permitAll() // GET and POST Both should be availble for everybody
+//
+//                .anyRequest().denyAll()  // if pattern is not match all other URL will be denied
+//                .and().csrf().disable() // Disabled to configure CSRF
+//        //logout feature
+//               // .logout().logoutSuccessUrl("/").deleteCookies("JSESSION_ID").invalidateHttpSession(true);
+//                .logout().logoutSuccessUrl("/");
 
 
         //CSRF Support for Ignoring URL
